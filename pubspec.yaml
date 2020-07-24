@@ -1,6 +1,6 @@
 name: sound_generator
 description: This plugin is a procedural sound generator.
-version: 0.0.1
+version: 0.0.2
 author: Mert Güner <m.mertguner@gmail.com>
 homepage: https://github.com/mertguner/sound_generator.git
 

@@ -1,14 +1,11 @@
 # sound_generator
 
-A new Flutter plugin.
+This plugin is a procedural sound generator. It provides fluidly sound transitions in frequency changes.
 
-## Getting Started
+You can see real signal shape with one Cycle snapshot properties
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Example Application Screenshot
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<p align="center">
+  <img src="https://github.com/mertguner/sound_generator/raw/master/Screenshot.png" width="350" title="hover text">
+</p>
