@@ -17,59 +17,80 @@ import io.github.mertguner.sound_generator.models.WaveTypes;
 @TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class SoundGenerator {
 
-    private Thread mThread;
-    private AudioTrack mAudioTrack;
+    private Thread bufferThread;
+    private AudioTrack audioTrack;
     private signalDataGenerator generator;
-    private boolean shouldPlay = false;
+    private boolean isPlaying = false;
     private int minSamplesSize;
     private WaveTypes waveType = WaveTypes.SINUSOIDAL;
 
-    public int getSampleRate(){ return signalDataGenerator.SAMPLE_RATE; }
-    public void refreshOneCycleData()
-    {
-        if(generator != null)
-            generator.createOneCycleData();
+    public void setAutoUpdateOneCycleSample(boolean autoUpdateOneCycleSample) {
+        if (generator != null)
+            generator.setAutoUpdateOneCycleSample(autoUpdateOneCycleSample);
     }
-    public void setFrequency(float v){
-        if(generator != null)
+
+    public int getSampleRate() {
+        if (generator != null)
+            return generator.getSampleRate();
+        return 0;
+    }
+
+    public void setSampleRate(int sampleRate) {
+        if (generator != null)
+            generator.setSampleRate(sampleRate);
+    }
+
+    public void refreshOneCycleData() {
+        if (generator != null)
+            generator.createOneCycleData(true);
+    }
+
+    public void setFrequency(float v) {
+        if (generator != null)
             generator.setFrequency(v);
+    }
+
+    public float getFrequency() {
+        if (generator != null)
+            return generator.getFrequency();
+        return 0;
     }
 
     public void setBalance(float balance) {
         float right = (balance >= 0) ? 1 : (balance == -1) ? 0 : (1 + balance);
         float left = (balance <= 0) ? 1 : (balance == 1) ? 0 : (1 - balance);
-        if (mAudioTrack != null) {
-            mAudioTrack.setStereoVolume(left, right);
+        if (audioTrack != null) {
+            audioTrack.setStereoVolume(left, right);
         }
     }
 
-    public void setWaveform(WaveTypes waveType){
-        if(this.waveType.equals(waveType) || (generator == null))
+    public void setWaveform(WaveTypes waveType) {
+        if (this.waveType.equals(waveType) || (generator == null))
             return;
 
         this.waveType = waveType;
 
-        if(waveType.equals(WaveTypes.SINUSOIDAL))
+        if (waveType.equals(WaveTypes.SINUSOIDAL))
             generator.setGenerator(new sinusoidalGenerator());
-        else if(waveType.equals(WaveTypes.TRIANGLE))
+        else if (waveType.equals(WaveTypes.TRIANGLE))
             generator.setGenerator(new triangleGenerator());
-        else if(waveType.equals(WaveTypes.SQUAREWAVE))
+        else if (waveType.equals(WaveTypes.SQUAREWAVE))
             generator.setGenerator(new squareWaveGenerator());
-        else if(waveType.equals(WaveTypes.SAWTOOTH))
+        else if (waveType.equals(WaveTypes.SAWTOOTH))
             generator.setGenerator(new sawtoothGenerator());
     }
 
-    public SoundGenerator(){
+    public void init(int sampleRate) {
         minSamplesSize = AudioTrack.getMinBufferSize(
-                signalDataGenerator.SAMPLE_RATE,
+                sampleRate,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT);
 
-        generator = new signalDataGenerator(minSamplesSize);
+        generator = new signalDataGenerator(minSamplesSize, sampleRate);
 
-        mAudioTrack = new AudioTrack(
+        audioTrack = new AudioTrack(
                 AudioManager.STREAM_MUSIC,
-                signalDataGenerator.SAMPLE_RATE,
+                sampleRate,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT,
                 minSamplesSize,
@@ -77,54 +98,55 @@ public class SoundGenerator {
     }
 
     public boolean isPlaying() {
-        return mThread != null;
+        return isPlaying;
     }
 
     public void startPlayback() {
-        if (mThread != null) return;
+        if (bufferThread != null || audioTrack == null) return;
 
-        shouldPlay = true;
+        isPlaying = true;
 
-        mThread = new Thread(new Runnable() {
+        bufferThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                mAudioTrack.flush();
-                mAudioTrack.setPlaybackHeadPosition(0);
-                mAudioTrack.play();
-                while (shouldPlay) {
-                    mAudioTrack.write(generator.getData(), 0, minSamplesSize);
+                audioTrack.flush();
+                audioTrack.setPlaybackHeadPosition(0);
+                audioTrack.play();
+                while (isPlaying) {
+                    audioTrack.write(generator.getData(), 0, minSamplesSize);
                 }
             }
-        });
+        }
+        );
 
         isPlayingStreamHandler.change(true);
 
-        mThread.start();
+        bufferThread.start();
     }
 
-
     public void stopPlayback() {
-        if (mThread == null) return;
+        if (bufferThread == null) return;
 
-        shouldPlay = false;
+        isPlaying = false;
+
         try {
-            mThread.join();
+            bufferThread.join(); //Waiting thread
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         isPlayingStreamHandler.change(false);
-        mThread = null;
+        bufferThread = null;
 
-        if(mAudioTrack != null) {	            // Turn off looping
-            mAudioTrack.stop();
+        if (audioTrack != null) {
+            audioTrack.stop();
         }
     }
 
     public void release() {
-        if(isPlaying())
+        if (isPlaying())
             stopPlayback();
-        mAudioTrack.release();
+        audioTrack.release();
     }
 
 }

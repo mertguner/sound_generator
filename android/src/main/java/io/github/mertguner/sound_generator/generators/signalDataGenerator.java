@@ -7,27 +7,38 @@ import io.github.mertguner.sound_generator.handlers.getOneCycleDataHandler;
 
 public class signalDataGenerator {
 
-    public static final int SAMPLE_RATE = 96000;
+
     private final float _2Pi = 2.0f * (float) Math.PI;
-    private final float phCoefficient = _2Pi / (float) SAMPLE_RATE;
-    private final float smoothStep = 1f / (float) SAMPLE_RATE * 20f;
+
+    private int sampleRate = 48000;
+    private float phCoefficient = _2Pi / (float) sampleRate;
+    private float smoothStep = 1f / (float) sampleRate * 20f;
 
     private float frequency = 50;
     private baseGenerator generator = new sinusoidalGenerator();
 
     private short[] backgroundBuffer;
     private short[] buffer;
-    //private short[] oneCycleBuffer;
     private List<Integer> oneCycleBuffer = new ArrayList<>();
     private int bufferSamplesSize;
     private float ph = 0;
     private float oldFrequency = 50;
     private boolean creatingNewData = false;
+    private boolean autoUpdateOneCycleSample = false;
+
+    public boolean isAutoUpdateOneCycleSample() { return autoUpdateOneCycleSample; }
+    public void setAutoUpdateOneCycleSample(boolean autoUpdateOneCycleSample) { this.autoUpdateOneCycleSample = autoUpdateOneCycleSample; }
+
+    public int getSampleRate() { return sampleRate; }
+    public void setSampleRate(int sampleRate) {
+        this.sampleRate = sampleRate;
+        phCoefficient = _2Pi / (float) sampleRate;
+        smoothStep = 1f / (float) sampleRate * 20f;
+    }
 
     public baseGenerator getGenerator() {
         return generator;
     }
-
     public void setGenerator(baseGenerator generator) {
         this.generator = generator;
         createOneCycleData();
@@ -36,16 +47,16 @@ public class signalDataGenerator {
     public float getFrequency() {
         return frequency;
     }
-
     public void setFrequency(float frequency) {
         this.frequency = frequency;
         createOneCycleData();
     }
 
-    public signalDataGenerator(int bufferSamplesSize) {
+    public signalDataGenerator(int bufferSamplesSize, int sampleRate) {
         this.bufferSamplesSize = bufferSamplesSize;
         backgroundBuffer = new short[bufferSamplesSize];
         buffer = new short[bufferSamplesSize];
+        setSampleRate(sampleRate);
         updateData();
         createOneCycleData();
     }
@@ -81,7 +92,11 @@ public class signalDataGenerator {
     }
 
     public void createOneCycleData() {
-        if (generator == null)
+        createOneCycleData(false);
+    }
+
+    public void createOneCycleData(boolean force) {
+        if (generator == null || (!autoUpdateOneCycleSample && !force))
             return;
 
         int size = Math.round(_2Pi / (frequency * phCoefficient));
@@ -90,7 +105,7 @@ public class signalDataGenerator {
         for (int i = 0; i < size; i++) {
             oneCycleBuffer.add((int)generator.getValue((frequency * phCoefficient) * (float) i, _2Pi));
         }
-        oneCycleBuffer.add((int)generator.getValue(0, _2Pi));// For full Cycle view
+        oneCycleBuffer.add((int)generator.getValue(0, _2Pi));
         getOneCycleDataHandler.setData(oneCycleBuffer);
     }
 }

@@ -1,4 +1,4 @@
-# sound_generator
+# Sound Generator
 
 This plugin is a procedural sound generator. It provides fluidly sound transitions in frequency changes.
 

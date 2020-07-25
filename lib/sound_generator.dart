@@ -5,68 +5,93 @@ import 'package:sound_generator/waveTypes.dart';
 
 class SoundGenerator {
   static const MethodChannel _channel = const MethodChannel('sound_generator');
-  static const EventChannel _onChangeIsPlaying = const EventChannel('io.github.mertguner.sound_generator/onChangeIsPlaying');
-  static const EventChannel _onOneCycleDataHandler = const EventChannel('io.github.mertguner.sound_generator/onOneCycleDataHandler');
+  static const EventChannel _onChangeIsPlaying = const EventChannel(
+      'io.github.mertguner.sound_generator/onChangeIsPlaying');
+  static const EventChannel _onOneCycleDataHandler = const EventChannel(
+      'io.github.mertguner.sound_generator/onOneCycleDataHandler');
 
+  /// is Playing data changed event
   static Stream<bool> _onIsPlayingChanged;
   static Stream<bool> get onIsPlayingChanged {
-    if(_onIsPlayingChanged == null)
-      _onIsPlayingChanged = _onChangeIsPlaying.receiveBroadcastStream().map<bool>((value) => value);
+    if (_onIsPlayingChanged == null)
+      _onIsPlayingChanged = _onChangeIsPlaying
+          .receiveBroadcastStream()
+          .map<bool>((value) => value);
     return _onIsPlayingChanged;
   }
 
+  /// One cycle data changed event
   static Stream<List<int>> _onGetOneCycleDataHandler;
   static Stream<List<int>> get onOneCycleDataHandler {
-    if(_onGetOneCycleDataHandler == null)
-      _onGetOneCycleDataHandler = _onOneCycleDataHandler.receiveBroadcastStream().map<List<int>>((value) => new List<int>.from(value));
+    if (_onGetOneCycleDataHandler == null)
+      _onGetOneCycleDataHandler = _onOneCycleDataHandler
+          .receiveBroadcastStream()
+          .map<List<int>>((value) => new List<int>.from(value));
     return _onGetOneCycleDataHandler;
   }
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  /// init function
+  static void init(int sampleRate) async {
+    await _channel
+        .invokeMethod("init", <String, dynamic>{"sampleRate": sampleRate});
   }
 
+  /// Play sound
   static void play() async {
     await _channel.invokeMethod('play');
   }
 
+  /// Stop playing sound
   static void stop() async {
     await _channel.invokeMethod('stop');
   }
 
+  /// Release all data
   static void release() async {
     await _channel.invokeMethod('release');
   }
 
+  /// Refresh One Cycle Data
   static void refreshOneCycleData() async {
     await _channel.invokeMethod('refreshOneCycleData');
   }
 
+  /// Get is Playing data
   static Future<bool> get isPlaying async {
     final bool playing = await _channel.invokeMethod('isPlaying');
     return playing;
   }
 
+  /// Get SampleRate
   static Future<int> get getSampleRate async {
     final int sampleRate = await _channel.invokeMethod('getSampleRate');
     return sampleRate;
   }
 
+  /// Set AutoUpdateOneCycleSample
+  static void setAutoUpdateOneCycleSample(bool autoUpdateOneCycleSample) async {
+    await _channel.invokeMethod(
+        "setAutoUpdateOneCycleSample", <String, dynamic>{
+      "autoUpdateOneCycleSample": autoUpdateOneCycleSample
+    });
+  }
 
+  /// Set Frequency
   static void setFrequency(double frequency) async {
-    await _channel.invokeMethod("setFrequency", <String, dynamic>{"frequency": frequency});
+    await _channel.invokeMethod(
+        "setFrequency", <String, dynamic>{"frequency": frequency});
   }
 
-  static void setCenter(double center) async {
-    await _channel.invokeMethod("setCenter", <String, dynamic>{"center": center});
-  }
-
+  /// Set Balance
   static void setBalance(double balance) async {
-    await _channel.invokeMethod("setBalance", <String, dynamic>{"balance": balance});
+    await _channel
+        .invokeMethod("setBalance", <String, dynamic>{"balance": balance});
   }
 
+  /// Set WaveType
   static void setWaveType(waveTypes waveType) async {
-    await _channel.invokeMethod("setWaveform", <String, dynamic>{"waveType": waveType.toString().replaceAll("waveTypes.", "")});
+    await _channel.invokeMethod("setWaveform", <String, dynamic>{
+      "waveType": waveType.toString().replaceAll("waveTypes.", "")
+    });
   }
 }

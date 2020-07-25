@@ -1,4 +1,2 @@
-
-enum waveTypes {
-  SINUSOIDAL, SQUAREWAVE, TRIANGLE, SAWTOOTH
-}
+/// Wave Types
+enum waveTypes { SINUSOIDAL, SQUAREWAVE, TRIANGLE, SAWTOOTH }

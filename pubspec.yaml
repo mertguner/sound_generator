@@ -1,6 +1,6 @@
 name: sound_generator
-description: This plugin is a procedural sound generator.
-version: 0.0.2
+description: This plugin is a procedural sound generator. It provides fluidly sound transitions in frequency changes. You can see real signal shape with one Cycle snapshot properties
+version: 0.0.3
 author: Mert Güner <m.mertguner@gmail.com>
 homepage: https://github.com/mertguner/sound_generator.git
 
@@ -29,8 +29,6 @@ flutter:
     platforms:
       android:
         package: io.github.mertguner.sound_generator
-        pluginClass: SoundGeneratorPlugin
-      ios:
         pluginClass: SoundGeneratorPlugin
 
   # To add assets to your plugin package, add an assets section, like this:

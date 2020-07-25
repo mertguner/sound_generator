@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await SoundGenerator.platformVersion, '42');
+    expect(await SoundGenerator.isPlaying, false);
   });
 }
