@@ -1,6 +1,6 @@
 name: sound_generator
 description: This plugin is a procedural sound generator. It provides fluidly sound transitions in frequency changes. You can see real signal shape with one Cycle snapshot properties
-version: 0.0.3
+version: 0.0.4
 author: Mert Güner <m.mertguner@gmail.com>
 homepage: https://github.com/mertguner/sound_generator.git
 

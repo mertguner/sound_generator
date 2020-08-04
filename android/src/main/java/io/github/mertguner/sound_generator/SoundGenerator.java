@@ -23,6 +23,7 @@ public class SoundGenerator {
     private boolean isPlaying = false;
     private int minSamplesSize;
     private WaveTypes waveType = WaveTypes.SINUSOIDAL;
+    private float rightVolume = 1, leftVolume = 1;
 
     public void setAutoUpdateOneCycleSample(boolean autoUpdateOneCycleSample) {
         if (generator != null)
@@ -57,10 +58,21 @@ public class SoundGenerator {
     }
 
     public void setBalance(float balance) {
-        float right = (balance >= 0) ? 1 : (balance == -1) ? 0 : (1 + balance);
-        float left = (balance <= 0) ? 1 : (balance == 1) ? 0 : (1 - balance);
+        balance = Math.max(-1, Math.min(1, balance));
+
+        rightVolume = (balance >= 0) ? 1 : (balance == -1) ? 0 : (1 + balance);
+        leftVolume = (balance <= 0) ? 1 : (balance == 1) ? 0 : (1 - balance);
         if (audioTrack != null) {
-            audioTrack.setStereoVolume(left, right);
+            audioTrack.setStereoVolume(leftVolume, rightVolume);
+        }
+    }
+
+
+    public void setVolume(float volume) {
+        volume = Math.max(0, Math.min(1, volume));
+
+        if (audioTrack != null) {
+            audioTrack.setStereoVolume(leftVolume * volume, rightVolume * volume);
         }
     }
 
@@ -80,21 +92,28 @@ public class SoundGenerator {
             generator.setGenerator(new sawtoothGenerator());
     }
 
-    public void init(int sampleRate) {
-        minSamplesSize = AudioTrack.getMinBufferSize(
-                sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
+    public boolean init(int sampleRate) {
+        try {
+            minSamplesSize = AudioTrack.getMinBufferSize(
+                    sampleRate,
+                    AudioFormat.CHANNEL_OUT_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT);
 
-        generator = new signalDataGenerator(minSamplesSize, sampleRate);
+            generator = new signalDataGenerator(minSamplesSize, sampleRate);
 
-        audioTrack = new AudioTrack(
-                AudioManager.STREAM_MUSIC,
-                sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT,
-                minSamplesSize,
-                AudioTrack.MODE_STREAM);
+            audioTrack = new AudioTrack(
+                    AudioManager.STREAM_MUSIC,
+                    sampleRate,
+                    AudioFormat.CHANNEL_OUT_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT,
+                    minSamplesSize,
+                    AudioTrack.MODE_STREAM);
+
+            return true;
+        }catch (Exception ex)
+        {
+            return false;
+        }
     }
 
     public boolean isPlaying() {

@@ -31,9 +31,10 @@ class SoundGenerator {
   }
 
   /// init function
-  static void init(int sampleRate) async {
-    await _channel
+  static Future<bool> init(int sampleRate) async {
+    final bool init = await _channel
         .invokeMethod("init", <String, dynamic>{"sampleRate": sampleRate});
+    return init;
   }
 
   /// Play sound
@@ -82,7 +83,7 @@ class SoundGenerator {
         "setFrequency", <String, dynamic>{"frequency": frequency});
   }
 
-  /// Set Balance
+  /// Set Balance Range from -1 to 1
   static void setBalance(double balance) async {
     await _channel
         .invokeMethod("setBalance", <String, dynamic>{"balance": balance});
@@ -92,6 +93,13 @@ class SoundGenerator {
   static void setWaveType(waveTypes waveType) async {
     await _channel.invokeMethod("setWaveform", <String, dynamic>{
       "waveType": waveType.toString().replaceAll("waveTypes.", "")
+    });
+  }
+
+  /// Set Volume Range from 0 to 1
+  static void setVolume(double volume) async {
+    await _channel.invokeMethod("setVolume", <String, dynamic>{
+      "volume": volume
     });
   }
 }

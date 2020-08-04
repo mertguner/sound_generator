@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
   bool isPlaying = false;
   double frequency = 20;
   double balance = 0;
+  double volume = 1;
   waveTypes waveType = waveTypes.SINUSOIDAL;
   int sampleRate = 96000;
   List<int> oneCycleData;
@@ -194,6 +195,36 @@ class _MyAppState extends State<MyApp> {
                                           this.balance = _value.toDouble();
                                           SoundGenerator.setBalance(
                                               this.balance);
+                                        });
+                                      }),
+                                )
+                              ])),
+                      SizedBox(height: 5),
+                      Text("Volume"),
+                      Container(
+                          width: double.infinity,
+                          height: 40,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Center(
+                                      child: Text(
+                                          this.volume.toStringAsFixed(2))),
+                                ),
+                                Expanded(
+                                  flex: 8, // 60%
+                                  child: Slider(
+                                      min: 0,
+                                      max: 1,
+                                      value: this.volume,
+                                      onChanged: (_value) {
+                                        setState(() {
+                                          this.volume = _value.toDouble();
+                                          SoundGenerator.setVolume(
+                                              this.volume);
                                         });
                                       }),
                                 )

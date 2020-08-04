@@ -11,3 +11,8 @@
 
 * Added Changeable Sample Rate
 * Added one Cycle Data Auto refresh Control
+
+## [0.0.4] - 08/04/2020
+
+* Added Volume Control
+* Added init Function Done Control

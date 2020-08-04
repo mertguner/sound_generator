@@ -53,7 +53,7 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     if (call.method.equals("init")) {
       int sampleRate = call.argument("sampleRate");
-      soundGenerator.init(sampleRate);
+      result.success(soundGenerator.init(sampleRate));
     }else if (call.method.equals("release")) {
       soundGenerator.release();
     }else if (call.method.equals("play")) {
@@ -74,6 +74,9 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
     }else if (call.method.equals("setBalance")) {
       double balance = call.argument("balance");
       soundGenerator.setBalance((float)balance);
+    }else if (call.method.equals("setVolume")) {
+      double volume = call.argument("volume");
+      soundGenerator.setVolume((float)volume);
     }else if (call.method.equals("getSampleRate")) {
       result.success(soundGenerator.getSampleRate());
     }else if (call.method.equals("refreshOneCycleData")) {
