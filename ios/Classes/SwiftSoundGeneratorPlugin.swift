@@ -19,6 +19,8 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
     super.init()
     self.mixer = AKMixer(self.oscillator)
     self.mixer!.volume = 1.0
+    AKSettings.disableAVAudioSessionCategoryManagement = true
+    AKSettings.disableAudioSessionDeactivationOnStop = true
     AKManager.output = self.mixer!
     let methodChannel = FlutterMethodChannel(name: "sound_generator", binaryMessenger: registrar.messenger())
     self.onChangeIsPlaying = BetterEventChannel(name: "io.github.mertguner.sound_generator/onChangeIsPlaying", messenger: registrar.messenger())
