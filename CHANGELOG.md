@@ -16,3 +16,7 @@
 
 * Added Volume Control
 * Added init Function Done Control
+
+## [0.0.5] - 10/05/2021
+
+* Added IOS Support (thank you https://github.com/ryanheise)
