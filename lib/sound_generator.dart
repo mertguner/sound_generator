@@ -11,22 +11,31 @@ class SoundGenerator {
       'io.github.mertguner.sound_generator/onOneCycleDataHandler');
 
   /// is Playing data changed event
-  static Stream<bool> _onIsPlayingChanged;
+  static bool _onIsPlayingChangedInitialized = false;
+  static late Stream<bool> _onIsPlayingChanged;
   static Stream<bool> get onIsPlayingChanged {
-    if (_onIsPlayingChanged == null)
+    if (!_onIsPlayingChangedInitialized) {
       _onIsPlayingChanged = _onChangeIsPlaying
           .receiveBroadcastStream()
           .map<bool>((value) => value);
+
+      _onIsPlayingChangedInitialized = true;
+    }
+      
     return _onIsPlayingChanged;
   }
 
   /// One cycle data changed event
-  static Stream<List<int>> _onGetOneCycleDataHandler;
+  static bool _onGetOneCycleDataHandlerInitialized = false;
+  static late Stream<List<int>> _onGetOneCycleDataHandler;
   static Stream<List<int>> get onOneCycleDataHandler {
-    if (_onGetOneCycleDataHandler == null)
+    if (!_onGetOneCycleDataHandlerInitialized) {
       _onGetOneCycleDataHandler = _onOneCycleDataHandler
           .receiveBroadcastStream()
           .map<List<int>>((value) => new List<int>.from(value));
+      _onGetOneCycleDataHandlerInitialized = true;
+    }
+
     return _onGetOneCycleDataHandler;
   }
 

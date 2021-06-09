@@ -9,7 +9,11 @@ void main() {
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      if (methodCall.method == 'isPlaying') {
+        return false;
+      }
+
+      throw ArgumentError.value(methodCall.method);
     });
   });
 
@@ -17,7 +21,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
+  test('isPlaying should return the value from the channel', () async {
     expect(await SoundGenerator.isPlaying, false);
   });
 }
