@@ -21,7 +21,7 @@ class SoundGenerator {
 
       _onIsPlayingChangedInitialized = true;
     }
-      
+
     return _onIsPlayingChanged;
   }
 
@@ -107,8 +107,7 @@ class SoundGenerator {
 
   /// Set Volume Range from 0 to 1
   static void setVolume(double volume) async {
-    await _channel.invokeMethod("setVolume", <String, dynamic>{
-      "volume": volume
-    });
+    await _channel
+        .invokeMethod("setVolume", <String, dynamic>{"volume": volume});
   }
 }

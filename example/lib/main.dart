@@ -211,8 +211,8 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 2,
                                   child: Center(
-                                      child: Text(
-                                          this.volume.toStringAsFixed(2))),
+                                      child:
+                                          Text(this.volume.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
@@ -223,8 +223,7 @@ class _MyAppState extends State<MyApp> {
                                       onChanged: (_value) {
                                         setState(() {
                                           this.volume = _value.toDouble();
-                                          SoundGenerator.setVolume(
-                                              this.volume);
+                                          SoundGenerator.setVolume(this.volume);
                                         });
                                       }),
                                 )

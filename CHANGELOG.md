@@ -20,3 +20,11 @@
 ## [0.0.5] - 10/05/2021
 
 * Added IOS Support (thank you https://github.com/ryanheise)
+
+## [0.0.6] - 14/01/2022
+
+* For increase Pub Point
+    - Formatted 5 files (3 changed)
+    - Support sound null safety
+* Updated the streams to be initialized late to cover null safety. (thank you stephen ross)
+* Fixed the isPlaying test. (thank you stephen ross)
