@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   double volume = 1;
   waveTypes waveType = waveTypes.SINUSOIDAL;
   int sampleRate = 96000;
-  List<int> oneCycleData;
+  List<int>? oneCycleData;
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +87,7 @@ class _MyAppState extends State<MyApp> {
                           ),
                           child: oneCycleData != null
                               ? CustomPaint(
-                                  //                       <-- CustomPaint widget
-                                  painter: MyPainter(oneCycleData),
+                                  painter: MyPainter(oneCycleData!),
                                 )
                               : Container()),
                       SizedBox(height: 2),
@@ -121,9 +120,9 @@ class _MyAppState extends State<MyApp> {
                       Center(
                           child: DropdownButton<waveTypes>(
                               value: this.waveType,
-                              onChanged: (waveTypes newValue) {
+                              onChanged: (waveTypes? newValue) {
                                 setState(() {
-                                  this.waveType = newValue;
+                                  this.waveType = newValue!;
                                   SoundGenerator.setWaveType(this.waveType);
                                 });
                               },

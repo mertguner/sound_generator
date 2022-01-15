@@ -28,3 +28,9 @@
     - Support sound null safety
 * Updated the streams to be initialized late to cover null safety. (thank you stephen ross)
 * Fixed the isPlaying test. (thank you stephen ross)
+
+## [0.0.7] - 15/01/2022
+
+* For increase Pub Point
+  - Support sound null safety
+  - Failed to run dartdoc
