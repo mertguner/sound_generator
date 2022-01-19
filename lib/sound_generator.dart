@@ -5,24 +5,24 @@ import 'package:sound_generator/waveTypes.dart';
 
 class SoundGenerator {
   static const MethodChannel _channel = const MethodChannel('sound_generator');
-  static const EventChannel _onChangeIsPlaying = const EventChannel(
+  static const EventChannel _onChangeIsPlayingDataHandler = const EventChannel(
       'io.github.mertguner.sound_generator/onChangeIsPlaying');
   static const EventChannel _onOneCycleDataHandler = const EventChannel(
       'io.github.mertguner.sound_generator/onOneCycleDataHandler');
 
   /// is Playing data changed event
   static bool _onIsPlayingChangedInitialized = false;
-  static late Stream<bool> _onIsPlayingChanged;
+  static late Stream<bool> _onGetIsPlayingChanged;
   static Stream<bool> get onIsPlayingChanged {
     if (!_onIsPlayingChangedInitialized) {
-      _onIsPlayingChanged = _onChangeIsPlaying
+      _onGetIsPlayingChanged = _onChangeIsPlayingDataHandler
           .receiveBroadcastStream()
           .map<bool>((value) => value);
 
       _onIsPlayingChangedInitialized = true;
     }
 
-    return _onIsPlayingChanged;
+    return _onGetIsPlayingChanged;
   }
 
   /// One cycle data changed event

@@ -34,3 +34,9 @@
 * For increase Pub Point
   - Support sound null safety
   - Failed to run dartdoc
+
+## [0.0.8] - 19/01/2022
+
+* For increase Pub Point
+  - Support sound null safety
+  - Failed to run dartdoc
