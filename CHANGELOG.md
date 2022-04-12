@@ -27,7 +27,7 @@
     - Formatted 5 files (3 changed)
     - Support sound null safety
 * Updated the streams to be initialized late to cover null safety. (thank you stephen ross)
-* Fixed the isPlaying test. (thank you stephen ross)
+* Fixed the isPlaying test. (thank you https://github.com/Stephen-Ross)
 
 ## [0.0.7] - 15/01/2022
 
@@ -40,3 +40,7 @@
 * For increase Pub Point
   - Support sound null safety
   - Failed to run dartdoc
+
+## [0.0.9] - 12/04/2022
+
+* Added panning functionality for ios, added version restriction podspec, fixes (thank you https://github.com/siherrmann)
