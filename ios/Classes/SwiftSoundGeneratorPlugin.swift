@@ -9,6 +9,7 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
   var sampleRate: Int = 48000;
   var isPlaying: Bool = false;
   var oscillator: AKOscillator = AKOscillator();
+  var panner: AKPanner?;
   var mixer: AKMixer?;
 
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -17,7 +18,8 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
 
   public init(registrar: FlutterPluginRegistrar) {
     super.init()
-    self.mixer = AKMixer(self.oscillator)
+    self.panner = AKPanner(self.oscillator, pan: 0.0)
+    self.mixer = AKMixer(self.panner!)
     self.mixer!.volume = 1.0
     AKSettings.disableAVAudioSessionCategoryManagement = true
     AKSettings.disableAudioSessionDeactivationOnStop = true
@@ -72,7 +74,8 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
         result(nil);
         break;
       case "setBalance":
-        result(nil);
+        let args = call.arguments as! [String: Any]
+        self.panner!.pan = args["balance"] as! Double
         break;
       case "setVolume":
         let args = call.arguments as! [String: Any]

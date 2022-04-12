@@ -17,7 +17,7 @@ A new Flutter plugin.
   s.xcconfig = { 'USER_HEADER_SEARCH_PATHS' => '"${PROJECT_DIR}/.."/Classes/CallbackManager/*,"${PROJECT_DIR}/.."/Classes/Scheduler/*' }
   s.dependency 'Flutter'
   # TODO: We actually require >=4.11.1 and <5
-  s.dependency 'AudioKit'
+  s.dependency 'AudioKit', '<5'
   s.static_framework = true
   s.platform = :ios, '12.0'
 
