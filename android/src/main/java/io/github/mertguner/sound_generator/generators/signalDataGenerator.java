@@ -52,11 +52,19 @@ public class signalDataGenerator {
         createOneCycleData();
     }
 
+    public void resetFrequency() {
+        oldFrequency = frequency;
+    }
+
     public signalDataGenerator(int bufferSamplesSize, int sampleRate) {
         this.bufferSamplesSize = bufferSamplesSize;
         backgroundBuffer = new short[bufferSamplesSize];
         buffer = new short[bufferSamplesSize];
         setSampleRate(sampleRate);
+        updateOnce();
+    }
+
+    public void updateOnce() {
         updateData();
         createOneCycleData();
     }

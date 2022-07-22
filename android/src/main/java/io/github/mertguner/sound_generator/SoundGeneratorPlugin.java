@@ -81,6 +81,9 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
       result.success(soundGenerator.getSampleRate());
     }else if (call.method.equals("refreshOneCycleData")) {
       soundGenerator.refreshOneCycleData();
+    }else if (call.method.equals("setCleanStart")) {
+      boolean cleanStart = call.argument("cleanStart");
+      soundGenerator.setCleanStart(cleanStart);
     }else {
       result.notImplemented();
     }

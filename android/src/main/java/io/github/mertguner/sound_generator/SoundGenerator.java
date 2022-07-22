@@ -24,6 +24,11 @@ public class SoundGenerator {
     private int minSamplesSize;
     private WaveTypes waveType = WaveTypes.SINUSOIDAL;
     private float rightVolume = 1, leftVolume = 1;
+    private boolean cleanStart = false;
+
+    public void setCleanStart(boolean cleanStart) {
+        this.cleanStart = cleanStart;
+    }
 
     public void setAutoUpdateOneCycleSample(boolean autoUpdateOneCycleSample) {
         if (generator != null)
@@ -124,6 +129,11 @@ public class SoundGenerator {
         if (bufferThread != null || audioTrack == null) return;
 
         isPlaying = true;
+
+        if (cleanStart) {
+            generator.resetFrequency();
+            generator.updateOnce();
+        }
 
         bufferThread = new Thread(new Runnable() {
             @Override

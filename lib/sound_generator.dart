@@ -110,4 +110,10 @@ class SoundGenerator {
     await _channel
         .invokeMethod("setVolume", <String, dynamic>{"volume": volume});
   }
+
+  /// Set whether we start with a clean frequency on play
+  static void setCleanStart(bool cleanStart) async {
+    await _channel
+        .invokeMethod("setCleanStart", <String, dynamic>{"cleanStart": cleanStart});
+  }
 }
