@@ -1,3 +1,5 @@
+package android
+
 group 'io.github.mertguner.sound_generator'
 version '1.0'
 
