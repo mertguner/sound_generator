@@ -1,27 +1,27 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sound_generator/sound_generator.dart';
+import 'package:sound_generator/sound_generator_platform_interface.dart';
+import 'package:sound_generator/sound_generator_method_channel.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+class MockSoundGeneratorPlatform
+    with MockPlatformInterfaceMixin
+    implements SoundGeneratorPlatform {
+
+  @override
+  Future<String?> getPlatformVersion() => Future.value('42');
+}
 
 void main() {
-  const MethodChannel channel = MethodChannel('sound_generator');
+  final SoundGeneratorPlatform initialPlatform = SoundGeneratorPlatform.instance;
 
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      if (methodCall.method == 'isPlaying') {
-        return false;
-      }
-
-      throw ArgumentError.value(methodCall.method);
-    });
+  test('$MethodChannelSoundGenerator is the default instance', () {
+    expect(initialPlatform, isInstanceOf<MethodChannelSoundGenerator>());
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
+  test('getPlatformVersion', () async {
+    MockSoundGeneratorPlatform fakePlatform = MockSoundGeneratorPlatform();
+    SoundGeneratorPlatform.instance = fakePlatform;
 
-  test('isPlaying should return the value from the channel', () async {
-    expect(await SoundGenerator.isPlaying, false);
+    expect(await initialPlatform.getPlatformVersion(), '42');
   });
 }

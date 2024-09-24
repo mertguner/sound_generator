@@ -78,6 +78,12 @@ class SoundGenerator {
     return sampleRate;
   }
 
+  /// Get PlatformVersion
+  static Future<String> get getPlatformVersion async {
+    final String platformVersion = await _channel.invokeMethod('getPlatformVersion');
+    return platformVersion;
+  }
+
   /// Set AutoUpdateOneCycleSample
   static void setAutoUpdateOneCycleSample(bool autoUpdateOneCycleSample) async {
     await _channel.invokeMethod(

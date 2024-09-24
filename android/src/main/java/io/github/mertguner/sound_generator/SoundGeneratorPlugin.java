@@ -51,7 +51,9 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("init")) {
+    if (call.method.equals("getPlatformVersion")) {
+      result.success("Android " + android.os.Build.VERSION.RELEASE);
+    } else if (call.method.equals("init")) {
       int sampleRate = call.argument("sampleRate");
       result.success(soundGenerator.init(sampleRate));
     }else if (call.method.equals("release")) {

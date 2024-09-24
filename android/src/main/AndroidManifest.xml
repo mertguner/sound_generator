@@ -1,2 +1,3 @@
-<manifest package="io.github.mertguner.sound_generator">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="io.github.mertguner.sound_generator">
 </manifest>

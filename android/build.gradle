@@ -1,7 +1,5 @@
-package android
-
-group 'io.github.mertguner.sound_generator'
-version '1.0'
+group = "io.github.mertguner.sound_generator"
+version = "1.0"
 
 buildscript {
     repositories {
@@ -10,8 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.20'
+        classpath("com.android.tools.build:gradle:8.1.0")
     }
 }
 
@@ -22,15 +19,36 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
+apply plugin: "com.android.library"
 
 android {
-    compileSdkVersion 34
+    if (project.android.hasProperty("namespace")) {
+        namespace = "io.github.mertguner.sound_generator"
+    }
+
+    compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdk = 21
     }
-    lintOptions {
-        disable 'InvalidPackage'
+
+    dependencies {
+        testImplementation("junit:junit:4.13.2")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
     }
 }

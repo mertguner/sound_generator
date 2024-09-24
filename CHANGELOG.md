@@ -44,3 +44,8 @@
 ## [0.0.9] - 12/04/2022
 
 * Added panning functionality for ios, added version restriction podspec, fixes (thank you https://github.com/siherrmann)
+
+## [0.0.10] - 24/09/2024
+
+* Added option to start with a clean new frequency on play() (thank you https://github.com/nyxkn)
+* Upgrade sound_generator Package for Compatibility with Flutter SDK 3.5.3 and Latest Android SDK (thank you https://github.com/vashukarn)

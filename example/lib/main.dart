@@ -5,10 +5,12 @@ import 'package:sound_generator/sound_generator.dart';
 import 'package:sound_generator/waveTypes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -25,11 +27,11 @@ class MyPainter extends CustomPainter {
     List<Offset> maxPoints = [];
 
     final t = size.width / (oneCycleData.length - 1);
-    for (var _i = 0, _len = oneCycleData.length; _i < _len; _i++) {
+    for (var i0 = 0, len = oneCycleData.length; i0 < len; i0++) {
       maxPoints.add(Offset(
           t * i,
           size.height / 2 -
-              oneCycleData[_i].toDouble() / 32767.0 * size.height / 2));
+              oneCycleData[i0].toDouble() / 32767.0 * size.height / 2));
       i++;
     }
 
@@ -41,8 +43,8 @@ class MyPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(MyPainter old) {
-    if (oneCycleData != old.oneCycleData) {
+  bool shouldRepaint(MyPainter oldDelegate) {
+    if (oneCycleData != oldDelegate.oneCycleData) {
       return true;
     }
     return false;
@@ -66,8 +68,8 @@ class _MyAppState extends State<MyApp> {
               title: const Text('Sound Generator Example'),
             ),
             body: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
                   vertical: 20,
                 ),
@@ -75,13 +77,13 @@ class _MyAppState extends State<MyApp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("A Cycle's Snapshot With Real Data"),
-                      SizedBox(height: 2),
+                      const Text("A Cycle's Snapshot With Real Data"),
+                      const SizedBox(height: 2),
                       Container(
                           height: 100,
                           width: double.infinity,
                           color: Colors.white54,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 5,
                             vertical: 0,
                           ),
@@ -90,16 +92,14 @@ class _MyAppState extends State<MyApp> {
                                   painter: MyPainter(oneCycleData!),
                                 )
                               : Container()),
-                      SizedBox(height: 2),
-                      Text("A Cycle Data Length is " +
-                          (sampleRate / this.frequency).round().toString() +
-                          " on sample rate " +
-                          sampleRate.toString()),
-                      SizedBox(height: 5),
-                      Divider(
+                      const SizedBox(height: 2),
+                      Text(
+                          "A Cycle Data Length is ${(sampleRate / frequency).round()} on sample rate $sampleRate"),
+                      const SizedBox(height: 5),
+                      const Divider(
                         color: Colors.red,
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       CircleAvatar(
                           radius: 30,
                           backgroundColor: Colors.lightBlueAccent,
@@ -111,19 +111,19 @@ class _MyAppState extends State<MyApp> {
                                     ? SoundGenerator.stop()
                                     : SoundGenerator.play();
                               })),
-                      SizedBox(height: 5),
-                      Divider(
+                      const SizedBox(height: 5),
+                      const Divider(
                         color: Colors.red,
                       ),
-                      SizedBox(height: 5),
-                      Text("Wave Form"),
+                      const SizedBox(height: 5),
+                      const Text("Wave Form"),
                       Center(
                           child: DropdownButton<waveTypes>(
-                              value: this.waveType,
+                              value: waveType,
                               onChanged: (waveTypes? newValue) {
                                 setState(() {
-                                  this.waveType = newValue!;
-                                  SoundGenerator.setWaveType(this.waveType);
+                                  waveType = newValue!;
+                                  SoundGenerator.setWaveType(waveType);
                                 });
                               },
                               items:
@@ -133,13 +133,13 @@ class _MyAppState extends State<MyApp> {
                                     child: Text(
                                         classType.toString().split('.').last));
                               }).toList())),
-                      SizedBox(height: 5),
-                      Divider(
+                      const SizedBox(height: 5),
+                      const Divider(
                         color: Colors.red,
                       ),
-                      SizedBox(height: 5),
-                      Text("Frequency"),
-                      Container(
+                      const SizedBox(height: 5),
+                      const Text("Frequency"),
+                      SizedBox(
                           width: double.infinity,
                           height: 40,
                           child: Row(
@@ -150,27 +150,26 @@ class _MyAppState extends State<MyApp> {
                                   flex: 2,
                                   child: Center(
                                       child: Text(
-                                          this.frequency.toStringAsFixed(2) +
-                                              " Hz")),
+                                          "${frequency.toStringAsFixed(2)} Hz")),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
                                   child: Slider(
                                       min: 20,
                                       max: 10000,
-                                      value: this.frequency,
-                                      onChanged: (_value) {
+                                      value: frequency,
+                                      onChanged: (value) {
                                         setState(() {
-                                          this.frequency = _value.toDouble();
+                                          frequency = value.toDouble();
                                           SoundGenerator.setFrequency(
-                                              this.frequency);
+                                              frequency);
                                         });
                                       }),
                                 )
                               ])),
-                      SizedBox(height: 5),
-                      Text("Balance"),
-                      Container(
+                      const SizedBox(height: 5),
+                      const Text("Balance"),
+                      SizedBox(
                           width: double.infinity,
                           height: 40,
                           child: Row(
@@ -181,26 +180,26 @@ class _MyAppState extends State<MyApp> {
                                   flex: 2,
                                   child: Center(
                                       child: Text(
-                                          this.balance.toStringAsFixed(2))),
+                                          balance.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
                                   child: Slider(
                                       min: -1,
                                       max: 1,
-                                      value: this.balance,
-                                      onChanged: (_value) {
+                                      value: balance,
+                                      onChanged: (value) {
                                         setState(() {
-                                          this.balance = _value.toDouble();
+                                          balance = value.toDouble();
                                           SoundGenerator.setBalance(
-                                              this.balance);
+                                              balance);
                                         });
                                       }),
                                 )
                               ])),
-                      SizedBox(height: 5),
-                      Text("Volume"),
-                      Container(
+                      const SizedBox(height: 5),
+                      const Text("Volume"),
+                      SizedBox(
                           width: double.infinity,
                           height: 40,
                           child: Row(
@@ -211,18 +210,18 @@ class _MyAppState extends State<MyApp> {
                                   flex: 2,
                                   child: Center(
                                       child:
-                                          Text(this.volume.toStringAsFixed(2))),
+                                          Text(volume.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
                                   child: Slider(
                                       min: 0,
                                       max: 1,
-                                      value: this.volume,
-                                      onChanged: (_value) {
+                                      value: volume,
+                                      onChanged: (value) {
                                         setState(() {
-                                          this.volume = _value.toDouble();
-                                          SoundGenerator.setVolume(this.volume);
+                                          volume = value.toDouble();
+                                          SoundGenerator.setVolume(volume);
                                         });
                                       }),
                                 )
