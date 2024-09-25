@@ -49,3 +49,7 @@
 
 * Added option to start with a clean new frequency on play() (thank you https://github.com/nyxkn)
 * Upgrade sound_generator Package for Compatibility with Flutter SDK 3.5.3 and Latest Android SDK (thank you https://github.com/vashukarn)
+
+## [0.0.11] - 25/09/2024
+
+* Fixed a bug where "Invalid redeclaration of 'SwiftSoundGeneratorPlugin' error" was thrown on iOS  (thank you https://github.com/MaximilianFlechtner)
