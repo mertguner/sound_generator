@@ -52,4 +52,4 @@
 
 ## [0.0.11] - 25/09/2024
 
-* Fixed a bug where "Invalid redeclaration of 'SwiftSoundGeneratorPlugin' error" was thrown on iOS 
+* Fixed a bug where "Invalid redeclaration of 'SwiftSoundGeneratorPlugin' error" was thrown on iOS  (thank you https://github.com/MaximilianFlechtner)
