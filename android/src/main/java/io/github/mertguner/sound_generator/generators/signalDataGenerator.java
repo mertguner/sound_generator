@@ -15,6 +15,8 @@ public class signalDataGenerator {
     private float smoothStep = 1f / (float) sampleRate * 20f;
 
     private float frequency = 50;
+    private float decibel = 20;
+
     private baseGenerator generator = new sinusoidalGenerator();
 
     private short[] backgroundBuffer;
@@ -52,6 +54,10 @@ public class signalDataGenerator {
         createOneCycleData();
     }
 
+    public void setDecibel(float decibel) {
+        this.decibel = decibel;
+    }
+
     public void resetFrequency() {
         oldFrequency = frequency;
     }
@@ -83,7 +89,24 @@ public class signalDataGenerator {
                 ph -= _2Pi;
             }
         }
+        float maxAmplitude = findMaxAmplitude(backgroundBuffer);
+        float amplitude = (float) Math.pow(10, decibel / 20.0);
+        for (int i = 0; i < bufferSamplesSize; i++) {
+            backgroundBuffer[i] = (short) (backgroundBuffer[i] * amplitude / maxAmplitude);
+        }
+
         creatingNewData = false;
+    }
+
+    private float findMaxAmplitude(short[] waveform) {
+        float maxAmplitude = 0;
+        for (short sample : waveform) {
+            float sampleValue = Math.abs(sample);
+            if (sampleValue > maxAmplitude) {
+                maxAmplitude = sampleValue;
+            }
+        }
+        return maxAmplitude;
     }
 
     public short[] getData() {

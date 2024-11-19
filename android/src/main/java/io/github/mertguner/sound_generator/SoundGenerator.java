@@ -97,6 +97,11 @@ public class SoundGenerator {
             generator.setGenerator(new sawtoothGenerator());
     }
 
+    public void setDecibel(float decibel) {
+        if (generator != null)
+            generator.setDecibel(decibel);
+    }
+
     public boolean init(int sampleRate) {
         try {
             minSamplesSize = AudioTrack.getMinBufferSize(

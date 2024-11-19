@@ -79,6 +79,9 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
     }else if (call.method.equals("setVolume")) {
       double volume = call.argument("volume");
       soundGenerator.setVolume((float)volume);
+    }else if (call.method.equals("setDecibel")) {
+        double decibel = call.argument("decibel");
+        soundGenerator.setDecibel((float)decibel);
     }else if (call.method.equals("getSampleRate")) {
       result.success(soundGenerator.getSampleRate());
     }else if (call.method.equals("refreshOneCycleData")) {

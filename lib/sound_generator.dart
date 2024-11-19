@@ -122,4 +122,11 @@ class SoundGenerator {
     await _channel
         .invokeMethod("setCleanStart", <String, dynamic>{"cleanStart": cleanStart});
   }
+
+  /// Set Decibel
+  static void setDecibel(double decibel) async {
+    await _channel
+        .invokeMethod("setDecibel", <String, dynamic>{"decibel": decibel});
+  }
+
 }
