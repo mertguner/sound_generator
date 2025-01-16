@@ -8,7 +8,12 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
   // This is not used yet.
   var sampleRate: Int = 48000;
   var isPlaying: Bool = false;
-  var oscillator: AKOscillator = AKOscillator();
+    
+  var oscillator: AKMorphingOscillator = AKMorphingOscillator(waveformArray: [AKTable(.sine),
+                                                                                AKTable(.square),
+                                                                                AKTable(.triangle),
+                                                                                AKTable(.sawtooth),
+                                                                              ]);
   var panner: AKPanner?;
   var mixer: AKMixer?;
 
@@ -74,7 +79,28 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
         result(nil);
         break;
       case "setWaveform":
-        result(nil);
+        let args = call.arguments as! [String: Any]
+        let waveType = args["waveType"] as! String
+        
+        switch waveType {
+            
+        case "SINUSOIDAL":
+            self.oscillator.index = 0
+            
+        case "SQUAREWAVE":
+            self.oscillator.index = 1
+            
+        case "TRIANGLE":
+            self.oscillator.index = 2
+            
+        case "SAWTOOTH":
+            self.oscillator.index = 3
+            
+        default:
+            self.oscillator.index = 0
+        }
+
+        result(nil)
         break;
       case "setBalance":
         let args = call.arguments as! [String: Any]
