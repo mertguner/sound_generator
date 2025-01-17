@@ -14,7 +14,6 @@ import io.github.mertguner.sound_generator.generators.triangleGenerator;
 import io.github.mertguner.sound_generator.handlers.isPlayingStreamHandler;
 import io.github.mertguner.sound_generator.models.WaveTypes;
 
-@TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class SoundGenerator {
 
     private Thread bufferThread;
@@ -23,7 +22,7 @@ public class SoundGenerator {
     private boolean isPlaying = false;
     private int minSamplesSize;
     private WaveTypes waveType = WaveTypes.SINUSOIDAL;
-    private float rightVolume = 1, leftVolume = 1;
+    private float rightVolume = 1, leftVolume = 1, volume = 1, dB = 20;
     private boolean cleanStart = false;
 
     public void setCleanStart(boolean cleanStart) {
@@ -73,12 +72,36 @@ public class SoundGenerator {
     }
 
 
-    public void setVolume(float volume) {
+    public void setVolume(float volume, boolean recalculateDecibel) {
         volume = Math.max(0, Math.min(1, volume));
+        this.volume = volume;
+
+        if(recalculateDecibel) {
+            if (volume >= 0.1f) {
+                this.dB = 20f * (float) Math.log10(volume);
+            } else {
+                this.dB = -20f;
+            }
+        }
 
         if (audioTrack != null) {
             audioTrack.setStereoVolume(leftVolume * volume, rightVolume * volume);
         }
+    }
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public void setDecibel(float dB) {
+        dB = Math.max(0, Math.min(-20, dB));
+        this.dB = dB;
+        float lineerVolume = (float) Math.pow(10f, (dB / 20f));
+        setVolume(lineerVolume, false);
+    }
+
+    public float getDecibel() {
+        return dB;
     }
 
     public void setWaveform(WaveTypes waveType) {

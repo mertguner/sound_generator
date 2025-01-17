@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class MyPainter extends CustomPainter {
@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
   double frequency = 20;
   double balance = 0;
   double volume = 1;
+  double dB = 20;
   waveTypes waveType = waveTypes.SINUSOIDAL;
   int sampleRate = 96000;
   List<int>? oneCycleData;
@@ -222,6 +223,37 @@ class _MyAppState extends State<MyApp> {
                                         setState(() {
                                           volume = value.toDouble();
                                           SoundGenerator.setVolume(volume);
+                                          dB = SoundGenerator.getDecibel as double;
+                                        });
+                                      }),
+                                )
+                              ])),
+                      const SizedBox(height: 5),
+                      const Text("Decibel"),
+                      SizedBox(
+                          width: double.infinity,
+                          height: 40,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 2,
+                                  child: Center(
+                                      child:
+                                      Text(dB.toStringAsFixed(2))),
+                                ),
+                                Expanded(
+                                  flex: 8, // 60%
+                                  child: Slider(
+                                      min: -20,
+                                      max: 0,
+                                      value: dB,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dB = value.toDouble();
+                                          SoundGenerator.setDecibel(dB);
+                                          volume = SoundGenerator.getVolume as double;
                                         });
                                       }),
                                 )

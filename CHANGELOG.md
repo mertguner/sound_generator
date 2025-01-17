@@ -53,3 +53,9 @@
 ## [0.0.11] - 25/09/2024
 
 * Fixed a bug where "Invalid redeclaration of 'SwiftSoundGeneratorPlugin' error" was thrown on iOS  (thank you https://github.com/MaximilianFlechtner)
+
+## [0.0.12] - 16/01/2025
+
+* Updated flutter libraries.
+* Added setDecibel function. (Thanks to https://github.com/LuizAlexandreSilva for the inspiration))
+* Update SoundGeneratorPlugin.swift for iOS sound wave change (thank you https://github.com/sharmaruchi30)

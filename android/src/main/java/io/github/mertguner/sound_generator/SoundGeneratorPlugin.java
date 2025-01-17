@@ -64,6 +64,10 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
       soundGenerator.stopPlayback();
     }else if (call.method.equals("isPlaying")) {
       result.success(soundGenerator.isPlaying());
+    }else if (call.method.equals("dB")) {
+      result.success(soundGenerator.getDecibel());
+    }else if (call.method.equals("volume")) {
+      result.success(soundGenerator.getVolume());
     }else if (call.method.equals("setAutoUpdateOneCycleSample")) {
       boolean autoUpdateOneCycleSample = call.argument("autoUpdateOneCycleSample");
       soundGenerator.setAutoUpdateOneCycleSample(autoUpdateOneCycleSample);
@@ -78,7 +82,10 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
       soundGenerator.setBalance((float)balance);
     }else if (call.method.equals("setVolume")) {
       double volume = call.argument("volume");
-      soundGenerator.setVolume((float)volume);
+      soundGenerator.setVolume((float)volume, true);
+    }else if (call.method.equals("setDecibel")) {
+      double dB = call.argument("dB");
+      soundGenerator.setDecibel((float)dB);
     }else if (call.method.equals("getSampleRate")) {
       result.success(soundGenerator.getSampleRate());
     }else if (call.method.equals("refreshOneCycleData")) {

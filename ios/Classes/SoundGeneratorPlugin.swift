@@ -67,6 +67,12 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
         onChangeIsPlaying!.sendEvent(event: false)
         result(nil);
         break;
+      case "dB":
+        result(self.getDecibel());
+        break;
+      case "volume":
+        result(self.getVolume());
+        break;
       case "isPlaying":
         result(self.isPlaying);
         break;
@@ -108,7 +114,15 @@ public class SwiftSoundGeneratorPlugin: NSObject, FlutterPlugin {
         break;
       case "setVolume":
         let args = call.arguments as! [String: Any]
-        self.mixer!.volume = args["volume"] as! Double
+        let volume = max(0, min(1, args["volume"] as! Double))
+        self.mixer!.volume = volume
+        result(nil);
+        break;
+      case "setDecibel":
+        let args = call.arguments as! [String: Any]
+        let dB = max(0, min(-20, args["dB"] as! Double))
+        let lineerVolume = pow(10.0, dB / 20.0)
+        self.mixer!.volume = lineerVolume
         result(nil);
         break;
       case "getSampleRate":
