@@ -22,7 +22,7 @@ public class SoundGenerator {
     private boolean isPlaying = false;
     private int minSamplesSize;
     private WaveTypes waveType = WaveTypes.SINUSOIDAL;
-    private float rightVolume = 1, leftVolume = 1, volume = 1, dB = 20;
+    private float rightVolume = 1, leftVolume = 1, volume = 1, dB = -20;
     private boolean cleanStart = false;
 
     public void setCleanStart(boolean cleanStart) {
@@ -77,10 +77,10 @@ public class SoundGenerator {
         this.volume = volume;
 
         if(recalculateDecibel) {
-            if (volume >= 0.1f) {
+            if (volume >= 0.01f) {
                 this.dB = 20f * (float) Math.log10(volume);
             } else {
-                this.dB = -20f;
+                this.dB = -40f;
             }
         }
 
@@ -94,7 +94,7 @@ public class SoundGenerator {
     }
 
     public void setDecibel(float dB) {
-        dB = Math.max(0, Math.min(-20, dB));
+        dB = Math.min(0, Math.max(-40, dB));
         this.dB = dB;
         float lineerVolume = (float) Math.pow(10f, (dB / 20f));
         setVolume(lineerVolume, false);

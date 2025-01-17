@@ -56,9 +56,9 @@ class _MyAppState extends State<MyApp> {
   double frequency = 20;
   double balance = 0;
   double volume = 1;
-  double dB = 20;
+  double dB = 0;
   waveTypes waveType = waveTypes.SINUSOIDAL;
-  int sampleRate = 96000;
+  int sampleRate = 192000;
   List<int>? oneCycleData;
 
   @override
@@ -180,8 +180,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 2,
                                   child: Center(
-                                      child: Text(
-                                          balance.toStringAsFixed(2))),
+                                      child: Text(balance.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
@@ -192,8 +191,7 @@ class _MyAppState extends State<MyApp> {
                                       onChanged: (value) {
                                         setState(() {
                                           balance = value.toDouble();
-                                          SoundGenerator.setBalance(
-                                              balance);
+                                          SoundGenerator.setBalance(balance);
                                         });
                                       }),
                                 )
@@ -210,8 +208,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 2,
                                   child: Center(
-                                      child:
-                                          Text(volume.toStringAsFixed(2))),
+                                      child: Text(volume.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
@@ -219,11 +216,13 @@ class _MyAppState extends State<MyApp> {
                                       min: 0,
                                       max: 1,
                                       value: volume,
-                                      onChanged: (value) {
+                                      onChanged: (value) async {
+                                        SoundGenerator.setVolume(volume);
+                                        double newDB =
+                                            await SoundGenerator.getDecibel;
                                         setState(() {
                                           volume = value.toDouble();
-                                          SoundGenerator.setVolume(volume);
-                                          dB = SoundGenerator.getDecibel as double;
+                                          dB = newDB;
                                         });
                                       }),
                                 )
@@ -240,20 +239,22 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 2,
                                   child: Center(
-                                      child:
-                                      Text(dB.toStringAsFixed(2))),
+                                      child: Text(dB.toStringAsFixed(2))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
                                   child: Slider(
-                                      min: -20,
+                                      min: -40,
                                       max: 0,
                                       value: dB,
-                                      onChanged: (value) {
+                                      onChanged: (value) async {
+                                        SoundGenerator.setDecibel(
+                                            value.toDouble());
+                                        double newVolume =
+                                            await SoundGenerator.getVolume;
                                         setState(() {
                                           dB = value.toDouble();
-                                          SoundGenerator.setDecibel(dB);
-                                          volume = SoundGenerator.getVolume as double;
+                                          volume = newVolume;
                                         });
                                       }),
                                 )
