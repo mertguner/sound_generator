@@ -208,7 +208,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 2,
                                   child: Center(
-                                      child: Text(volume.toStringAsFixed(2))),
+                                      child: Text(volume.toStringAsFixed(6))),
                                 ),
                                 Expanded(
                                   flex: 8, // 60%
@@ -244,7 +244,7 @@ class _MyAppState extends State<MyApp> {
                                 Expanded(
                                   flex: 8, // 60%
                                   child: Slider(
-                                      min: -40,
+                                      min: -120,
                                       max: 0,
                                       value: dB,
                                       onChanged: (value) async {

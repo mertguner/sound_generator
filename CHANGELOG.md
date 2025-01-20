@@ -59,3 +59,7 @@
 * Updated flutter libraries.
 * Added setDecibel function. (Thanks to https://github.com/LuizAlexandreSilva for the inspiration))
 * Update SoundGeneratorPlugin.swift for iOS sound wave change (thank you https://github.com/sharmaruchi30)
+
+## [0.0.13] - 20/01/2025
+
+* Updated the decibel setting to range from 0 to -120.

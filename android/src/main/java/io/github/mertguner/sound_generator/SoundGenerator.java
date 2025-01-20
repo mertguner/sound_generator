@@ -77,10 +77,10 @@ public class SoundGenerator {
         this.volume = volume;
 
         if(recalculateDecibel) {
-            if (volume >= 0.01f) {
+            if (volume >= 0.000001f) {
                 this.dB = 20f * (float) Math.log10(volume);
             } else {
-                this.dB = -40f;
+                this.dB = -120f;
             }
         }
 
@@ -94,9 +94,11 @@ public class SoundGenerator {
     }
 
     public void setDecibel(float dB) {
-        dB = Math.min(0, Math.max(-40, dB));
         this.dB = dB;
-        float lineerVolume = (float) Math.pow(10f, (dB / 20f));
+        float lineerVolume = (float) Math.pow(10f, (dB / 20f) );
+        if (lineerVolume < 0.000001f) {
+            lineerVolume = 0f;
+        }
         setVolume(lineerVolume, false);
     }
 
