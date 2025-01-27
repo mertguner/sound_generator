@@ -77,7 +77,6 @@ doc/api/
 ### Flutter ###
 # Flutter/Dart/Pub related
 **/doc/api/
-.fvm/flutter_sdk
 .pub-cache/
 .pub/
 coverage/
@@ -358,3 +357,9 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,intellij+all,androidstudio,android,flutter,java,ios
+
+# FVM Version Cache
+.fvm/
+
+# VSCode
+.vscode/
