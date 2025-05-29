@@ -8,7 +8,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-
 import io.github.mertguner.sound_generator.handlers.getOneCycleDataHandler;
 import io.github.mertguner.sound_generator.handlers.isPlayingStreamHandler;
 import io.github.mertguner.sound_generator.models.WaveTypes;
@@ -22,19 +21,6 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "sound_generator");
     channel.setMethodCallHandler(this);
-
-    final EventChannel onChangeIsPlaying = new EventChannel(
-            flutterPluginBinding.getBinaryMessenger(),
-            isPlayingStreamHandler.NATIVE_CHANNEL_EVENT
-    );
-    onChangeIsPlaying.setStreamHandler(new isPlayingStreamHandler());
-
-    final EventChannel onOneCycleDataHandler = new EventChannel(
-            flutterPluginBinding.getBinaryMessenger(),
-            getOneCycleDataHandler.NATIVE_CHANNEL_EVENT
-    );
-    onOneCycleDataHandler.setStreamHandler(new getOneCycleDataHandler());
-  }
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
