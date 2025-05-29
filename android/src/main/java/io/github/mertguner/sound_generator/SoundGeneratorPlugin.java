@@ -8,7 +8,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
+//import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.github.mertguner.sound_generator.handlers.getOneCycleDataHandler;
 import io.github.mertguner.sound_generator.handlers.isPlayingStreamHandler;
 import io.github.mertguner.sound_generator.models.WaveTypes;
@@ -40,14 +40,14 @@ public class SoundGeneratorPlugin implements FlutterPlugin, MethodCallHandler {
   // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "sound_generator");
-    channel.setMethodCallHandler(new SoundGeneratorPlugin());
-    final EventChannel onChangeIsPlaying = new EventChannel(registrar.messenger(), isPlayingStreamHandler.NATIVE_CHANNEL_EVENT);
-    onChangeIsPlaying.setStreamHandler(new isPlayingStreamHandler());
-    final EventChannel onOneCycleDataHandler = new EventChannel(registrar.messenger(), getOneCycleDataHandler.NATIVE_CHANNEL_EVENT);
-    onOneCycleDataHandler.setStreamHandler(new getOneCycleDataHandler());
-  }
+//  public static void registerWith(Registrar registrar) {
+//    final MethodChannel channel = new MethodChannel(registrar.messenger(), "sound_generator");
+//    channel.setMethodCallHandler(new SoundGeneratorPlugin());
+//    final EventChannel onChangeIsPlaying = new EventChannel(registrar.messenger(), isPlayingStreamHandler.NATIVE_CHANNEL_EVENT);
+//    onChangeIsPlaying.setStreamHandler(new isPlayingStreamHandler());
+//    final EventChannel onOneCycleDataHandler = new EventChannel(registrar.messenger(), getOneCycleDataHandler.NATIVE_CHANNEL_EVENT);
+//    onOneCycleDataHandler.setStreamHandler(new getOneCycleDataHandler());
+//  }
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
