@@ -8,17 +8,11 @@ platforms:
   ios:
 
 topics:
-  - flutter
   - audio
   - waveform
   - synthesizer
   - sound
-  - signal-processing
   - procedural-audio
-  - sine-wave
-  - square-wave
-  - triangle-wave
-  - sawtooth-wave
 
 environment:
   sdk: ^3.8.0
