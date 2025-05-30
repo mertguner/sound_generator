@@ -1,10 +1,27 @@
 name: sound_generator
-description: This plugin is a procedural sound generator. It provides fluidly sound transitions in frequency changes. You can see real signal shape with one Cycle snapshot properties
-version: 0.0.13
+description: Sound Generator is a procedural audio plugin for Flutter applications. It enables smooth frequency transitions and allows users to visualize signal waveforms in real-time
+version: 0.0.14
 homepage: https://github.com/mertguner/sound_generator.git
 
+platforms:
+  android:
+  ios:
+
+topics:
+  - flutter
+  - audio
+  - waveform
+  - synthesizer
+  - sound
+  - signal-processing
+  - procedural-audio
+  - sine-wave
+  - square-wave
+  - triangle-wave
+  - sawtooth-wave
+
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.8.0
   flutter: '>=3.3.0'
 
 dependencies:

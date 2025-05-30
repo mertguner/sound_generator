@@ -63,3 +63,9 @@
 ## [0.0.13] - 20/01/2025
 
 * Updated the decibel setting to range from 0 to -120.
+
+## [0.0.14] - 29/05/2025
+
+* Changed deprecated android AudioTrack library.
+* Flutter 3 compatibility (Thanks to https://github.com/vashukarn and https://github.com/Sahad2701)
+* Fix decibel calculation and code formatting in iOS plugin (Thanks to https://github.com/MaximilianFlechtner)
